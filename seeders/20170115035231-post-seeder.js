@@ -12,35 +12,31 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Users', [
+    return queryInterface.bulkInsert('Posts', [
       {
         id: 1,
-        name: 'John Doe 1',
-        bio: 'This is bio',
+        title: 'Title 1',
+        body: 'This is body 1',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
       {
         id: 2,
-        name: 'John Doe 2',
-        bio: 'This is bio',
+        title: 'Title 2',
+        body: 'This is body 2',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
       {
         id: 3,
-        name: 'John Doe 3',
-        bio: 'This is bio',
+        title: 'Title 3',
+        body: 'This is body 3',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
-      {
-        id: 4,
-        name: 'John Doe 4',
-        bio: 'This is bio',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
     ], {});
   },
 
@@ -52,6 +48,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-    return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('Posts', null, {});
   }
 };
