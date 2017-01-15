@@ -31,10 +31,12 @@ module.exports = makeExecutableSchema({
   `,
   resolvers: {
     Query: {
-      hello() {
+      hello(obj, args, context) {
+        logResolver(obj, args, context);
         return 'Hello world!';
       },
-      users(query, args) {
+      users(obj, args, context) {
+        logResolver(obj, args, context);
         if (args.id) {
           return models.User.findAll({
             where: {
@@ -47,9 +49,18 @@ module.exports = makeExecutableSchema({
       }
     },
     User: {
-      posts: (user) => {
-        return user.getPosts();
+      posts: (user, args, context) => {
+        logResolver(user, args, context);
+        if (context.user) {
+          return user.getPosts();
+        }
+        throw new Error('Not authorized'); // appear in errors and posts is null
       }
     }
   }
 });
+
+function logResolver(obj, args, context) {
+  const user = context.user ? context.user.name : null;
+  console.log(obj, args, user);
+}
