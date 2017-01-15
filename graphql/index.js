@@ -2,12 +2,7 @@ const models = require('../models');
 const {makeExecutableSchema} = require('graphql-tools');
 
 module.exports = makeExecutableSchema({
-  typeDefs: `
-    type Query {
-      hello: String
-      users(id: Int): [User]
-    }
-    
+  typeDefs: `    
     type User {
       id: Int!
       name: String!
@@ -25,8 +20,23 @@ module.exports = makeExecutableSchema({
       updatedAt: String
     }
     
+    input PostInput {
+      title : String!
+      body : String!
+    }
+    
+    type Query {
+      hello: String
+      users(id: Int): [User]
+    }
+    
+    type Mutation {
+      createPost(post: PostInput): Post
+    }
+    
     schema {
       query: Query
+      mutation: Mutation
     }
   `,
   resolvers: {
@@ -46,6 +56,21 @@ module.exports = makeExecutableSchema({
         } else {
           return models.User.findAll();
         }
+      }
+    },
+    Mutation: {
+      createPost (obj, args, context) {
+        logResolver(obj, args, context);
+        models.Post.create(args.post)
+          .then((post) => {
+            console.log(post);
+            if (context.user) {
+              post.setUser(context.user);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     User: {

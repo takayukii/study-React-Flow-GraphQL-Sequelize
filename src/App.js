@@ -6,7 +6,7 @@ import axios from 'axios';
 
 class App extends Component {
   componentDidMount() {
-    const payload = {
+    let payload = {
       query: `
       query getUser($userId: Int) {
         users(id: $userId) {
@@ -20,6 +20,32 @@ class App extends Component {
       `,
       variables: {
         userId: 2
+      }
+    };
+    axios.post('/graphql', payload)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    payload = {
+      query: `
+      mutation create ($post: PostInput) {
+        post: createPost(post: $post) {
+          title
+          body
+          createdAt
+          updatedAt
+        }
+      }
+      `,
+      variables: {
+        post: {
+          title: 'From React',
+          body: 'This is from React'
+        }
       }
     };
     axios.post('/graphql', payload)
