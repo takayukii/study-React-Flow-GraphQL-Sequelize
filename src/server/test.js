@@ -4,6 +4,9 @@ function foo(x) {
 }
 foo('Hello, world!');
 
+var str: number = 'hello world!';
+console.log(str);
+
 // const { graphql } = require('graphql');
 // const schema = require('./graphql');
 //

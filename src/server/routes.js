@@ -1,8 +1,9 @@
-const express = require('express');
-const passport = require('passport');
+// @flow
 
-const graphqlHTTP = require('express-graphql');
-const schema = require('./graphql');
+import express from 'express';
+import passport from 'passport';
+import graphqlHTTP from 'express-graphql';
+import schema from './graphql';
 
 const router = express.Router();
 
@@ -40,4 +41,4 @@ router.get('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-module.exports = router;
+export default router;

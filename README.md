@@ -45,3 +45,10 @@ To use GraphQL schema language instead of general API, graphql-tools is very muc
 
 Basically req.user is available in context, so you can control flow even in GraphQL context.
 
+## Flowtype
+
+### Abstract
+
+* [実践投入してわかったflowtypeのメリデメ](http://sssslide.com/speakerdeck.com/shinout/shi-jian-tou-ru-sitewakatutaflowtypefalsemerideme)
+* [npm trends](http://www.npmtrends.com/typescript-vs-flow-bin)
+

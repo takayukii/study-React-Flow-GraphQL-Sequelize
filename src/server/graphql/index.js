@@ -1,7 +1,7 @@
-const models = require('../models');
-const {makeExecutableSchema} = require('graphql-tools');
+import models from '../models';
+import {makeExecutableSchema} from 'graphql-tools';
 
-module.exports = makeExecutableSchema({
+export default makeExecutableSchema({
   typeDefs: `    
     type User {
       id: Int!

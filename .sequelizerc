@@ -1,0 +1,13 @@
+var path = require('path');
+require('dotenv').config();
+
+module.exports = {
+  'config': __filename,
+  'migrations-path': path.resolve('database', 'migrations'),
+  'seeders-path': path.resolve('database', 'seeders'),
+  'username': process.env.DATABASE_USERNAME,
+  'password': process.env.DATABASE_PASSWORD,
+  'database': process.env.DATABASE_DATABASE,
+  'host': process.env.DATABASE_HOST,
+  'dialect': 'mysql'
+}

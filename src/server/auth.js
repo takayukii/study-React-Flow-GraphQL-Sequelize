@@ -1,10 +1,9 @@
 // https://dev-blog.apollodata.com/a-guide-to-authentication-in-graphql-e002a4039d1#.r0bghb7ox
 
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const models = require('../models');
-
-const LocalStrategy = require('passport-local').Strategy;
+import passport from 'passport';
+import bcrypt from 'bcrypt';
+import models from './models';
+import {Strategy as LocalStrategy} from 'passport-local';
 
 passport.use('local', new LocalStrategy(
   {

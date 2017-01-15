@@ -34,10 +34,12 @@ class App extends Component {
       query: `
       mutation create ($post: PostInput) {
         post: createPost(post: $post) {
-          title
-          body
-          createdAt
-          updatedAt
+          post {
+            title
+            body
+            createdAt
+            updatedAt
+          }
         }
       }
       `,
@@ -53,6 +55,7 @@ class App extends Component {
         console.log(res);
       })
       .catch((err) => {
+        console.log('mutation');
         console.log(err);
       });
   }
