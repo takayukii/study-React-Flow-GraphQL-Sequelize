@@ -1,30 +1,22 @@
 const { graphql } = require('graphql');
-const data = require('./graphql');
+const schema = require('./graphql');
 
-graphql(data.schema, `
+graphql(schema, `
 { hello }
-`,
-data.rootValue).then((response) => {
+`).then((response) => {
   console.log(JSON.stringify(response));
 });
-graphql(data.schema, `
+graphql(schema, `
 {
   users(id: 1) {
     id
     name
-    bio
-    createdAt
-    updatedAt
+    posts {
+      title
+      body
+    }
   }
 }
-`,
-data.rootValue).then((response) => {
+`).then((response) => {
   console.log(JSON.stringify(response));
-});
-
-const models = require('./models');
-models.User.findAll({
-  include: [models.Post]
-}).then((users) => {
-  console.log(JSON.stringify(users));
 });

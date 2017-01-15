@@ -1,33 +1,55 @@
 const db = require('../models');
-const { graphql, buildSchema } = require('graphql');
+const {makeExecutableSchema} = require('graphql-tools');
 
-module.exports = {
-  schema: buildSchema(`
-  type Query {
-    hello: String
-    users(id: Int): [User]
-  }
-  
-  type User {
-    id: Int!
-    name: String!
-    bio: String
-    createdAt: String
-    updatedAt: String
-  }
-`),
-  rootValue: {
-    hello: () => {
-      return 'Hello world!';
+module.exports = makeExecutableSchema({
+  typeDefs: `
+    type Query {
+      hello: String
+      users(id: Int): [User]
+    }
+    
+    type User {
+      id: Int!
+      name: String!
+      bio: String
+      createdAt: String
+      updatedAt: String
+      posts: [Post]
+    }
+    
+    type Post {
+      id: Int!
+      title: String!
+      body: String!
+      createdAt: String
+      updatedAt: String
+    }
+    
+    schema {
+      query: Query
+    }
+  `,
+  resolvers: {
+    Query: {
+      hello() {
+        return 'Hello world!';
+      },
+      users(query, args) {
+        if (args.id) {
+          return db.User.findAll({
+            where: {
+              id: args.id
+            }
+          });
+        } else {
+          return db.User.findAll();
+        }
+      }
     },
-    users: ({id}) => {
-      console.log('id =', id);
-      if (id) {
-        return db.User.findAll({where: {id: id}});
-      } else {
-        return db.User.findAll();
+    User: {
+      posts: (user) => {
+        return user.getPosts();
       }
     }
-  },
-  graphiql: true
-};
+  }
+});
