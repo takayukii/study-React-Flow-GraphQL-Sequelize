@@ -1,4 +1,4 @@
-const db = require('../models');
+const models = require('../models');
 const {makeExecutableSchema} = require('graphql-tools');
 
 module.exports = makeExecutableSchema({
@@ -36,13 +36,13 @@ module.exports = makeExecutableSchema({
       },
       users(query, args) {
         if (args.id) {
-          return db.User.findAll({
+          return models.User.findAll({
             where: {
               id: args.id
             }
           });
         } else {
-          return db.User.findAll();
+          return models.User.findAll();
         }
       }
     },

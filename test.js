@@ -1,6 +1,10 @@
 const { graphql } = require('graphql');
 const schema = require('./graphql');
 
+const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(10);
+console.log('salt = ', salt);
+
 graphql(schema, `
 { hello }
 `).then((response) => {
