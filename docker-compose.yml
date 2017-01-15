@@ -10,7 +10,7 @@ services:
       - .:/app
     links:
       - db
-    command: npm start
+    command: node server.js
 
   db:
     image: mysql
