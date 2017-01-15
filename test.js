@@ -1,26 +1,32 @@
-const { graphql } = require('graphql');
-const schema = require('./graphql');
-
-const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(10);
-console.log('salt = ', salt);
-
-graphql(schema, `
-{ hello }
-`).then((response) => {
-  console.log(JSON.stringify(response));
-});
-graphql(schema, `
-{
-  users(id: 1) {
-    id
-    name
-    posts {
-      title
-      body
-    }
-  }
+// @flow
+function foo(x) {
+  return +x * 10;
 }
-`).then((response) => {
-  console.log(JSON.stringify(response));
-});
+foo('Hello, world!');
+
+// const { graphql } = require('graphql');
+// const schema = require('./graphql');
+//
+// const bcrypt = require('bcrypt');
+// const salt = bcrypt.genSaltSync(10);
+// console.log('salt = ', salt);
+//
+// graphql(schema, `
+// { hello }
+// `).then((response) => {
+//   console.log(JSON.stringify(response));
+// });
+// graphql(schema, `
+// {
+//   users(id: 1) {
+//     id
+//     name
+//     posts {
+//       title
+//       body
+//     }
+//   }
+// }
+// `).then((response) => {
+//   console.log(JSON.stringify(response));
+// });

@@ -2,7 +2,10 @@ version: '2'
 
 services:
   app:
-    build: ./env/app/.
+    build:
+      # http://stackoverflow.com/questions/27068596/how-to-include-files-outside-of-dockers-build-context
+      context: .
+      dockerfile: ./env/app/Dockerfile
     ports:
       - '3000:3000'
     working_dir: /app

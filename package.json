@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.21.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "flow": "flow",
     "eject": "react-scripts eject"
   }
 }
