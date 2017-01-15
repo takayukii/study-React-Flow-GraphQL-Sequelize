@@ -20,6 +20,11 @@ module.exports = makeExecutableSchema({
       updatedAt: String
     }
     
+    type PostCreateResult {
+      errors: [String]
+      post: Post
+    }
+    
     input PostInput {
       title : String!
       body : String!
@@ -31,7 +36,7 @@ module.exports = makeExecutableSchema({
     }
     
     type Mutation {
-      createPost(post: PostInput): Post
+      createPost(post: PostInput): PostCreateResult
     }
     
     schema {
@@ -61,16 +66,34 @@ module.exports = makeExecutableSchema({
     Mutation: {
       createPost (obj, args, context) {
         logResolver(obj, args, context);
-        models.Post.create(args.post)
-          .then((post) => {
-            console.log(post);
-            if (context.user) {
-              post.setUser(context.user);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+        return new Promise((resolve, reject) => {
+
+          // https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf#.84a1lxq2p
+          if (args.post.title.length < 2) {
+            return resolve({ // ! Use resolve instead of reject for plain format
+              errors: ['title', 'Title must be at a minimum 3 characters']
+            });
+          }
+
+          models.Post.create(args.post)
+            .then((post) => {
+              console.log(post);
+              if (context.user) {
+                post.setUser(context.user);
+              }
+              return resolve({
+                post: post
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+              return resolve({ // ! Use resolve instead of reject for plain format
+                errors: ['', err]
+              });
+            });
+        });
+
       }
     },
     User: {
